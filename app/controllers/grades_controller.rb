@@ -1,5 +1,6 @@
 class GradesController < ApplicationController
   before_action :set_grade, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :edit, :create, :destroy]
 
   # GET /grades
   def index
