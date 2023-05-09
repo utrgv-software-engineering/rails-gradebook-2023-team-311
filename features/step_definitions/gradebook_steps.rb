@@ -1,14 +1,22 @@
 Given("there are grades in the gradebook") do
     @teacher = create(:user)
+    @ta = create(:user)
     @eric = create(:grade, :valid)
     @tomai = create(:grade, :valid)
     @schweller = create(:grade, :valid)
     @wylie = create(:grade, :valid)
 end
 
-Given("I sign in") do
+Given("I sign in as a teacher") do
     visit new_user_session_path
     fill_in "user_email", with: @teacher.email
+    fill_in "user_password", with: "123greetings"
+    click_on "Log in"
+end
+
+Given("I sign in as ta") do
+    visit new_user_session_path
+    fill_in "user_email", with: @ta.email
     fill_in "user_password", with: "123greetings"
     click_on "Log in"
 end
@@ -38,6 +46,9 @@ end
 
 Then("that post should be deleted") do
     expect(page).to have_content("Grade was successfully destroyed.")
+end
+Then("that post should not be deleted") do
+    expect(page).to have_no_contnet("Grade was successfully destroyed.")
 end
 
 Then("I should see everyone's grades") do
