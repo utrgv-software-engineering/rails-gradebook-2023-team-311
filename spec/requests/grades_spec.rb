@@ -138,6 +138,25 @@ RSpec.describe "/grades", type: :request do
         delete grade_url(grade)
         expect(response).to redirect_to(grades_url)
       end
+      describe "DELETE /destroy" do
+        let(:user) { create(:user) }
+        let(:grade) { create(:grade, :valid) }
+      #testing if teacher can delete grades
+        before { sign_in user }
+      
+        it "destroys the requested grade" do
+          grade = create(:grade, :valid)
+          expect {
+            delete grade_url(grade)
+          }.to change(Grade, :count).by(-1)
+          
+        end
+      
+        it "redirects to the grades list" do
+          delete grade_url(grade)
+          expect(response).to redirect_to(grades_url)
+        end
+      end
     end
   end
   
