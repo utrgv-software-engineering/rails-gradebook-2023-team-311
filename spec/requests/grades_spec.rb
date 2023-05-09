@@ -78,6 +78,25 @@ RSpec.describe "/grades", type: :request do
           expect(response).to be_successful
         end
       end
+      context "as a teacher" do
+        let(:user) { create(:user) }
+    
+        before { sign_in user }
+    
+        it "teacher creates a new Grade" do
+          expect {
+            post grades_url, params: { grade: attributes_for(:grade, :valid) }
+          }.to change(Grade, :count).by(1)
+        end
+    
+    
+        it "redirects to the created grade" do
+          post grades_url, params: { grade: attributes_for(:grade, :valid) }
+          expect(response).to redirect_to(grade_url(Grade.last))
+        end
+    
+        # testing rpsec
+      end
     end
 
     describe "PATCH /update" do
