@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+
 <% if params[:sort_order] == 'asc' %>
   <% @grades = Grade.order('student_grade ASC') %>
 <% elsif params[:sort_order] == 'desc' %>

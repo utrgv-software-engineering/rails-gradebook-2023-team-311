@@ -1,5 +1,6 @@
 class GradesController < ApplicationController
   before_action :set_grade, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :edit, :create, :destroy]
 
   # GET /grades
   def index
@@ -54,8 +55,12 @@ class GradesController < ApplicationController
 
   # DELETE /grades/1
   def destroy
-    @grade.destroy
-    redirect_to grades_url, notice: 'Grade was successfully destroyed.'
+    if current_user.role_id == 1
+      @grade.destroy
+      redirect_to grades_url, notice: 'Grade was successfully destroyed.'
+    else
+      redirect_to grades_url, notice: 'You do not have permission to destroy grade.'
+    end
   end
 
   private
