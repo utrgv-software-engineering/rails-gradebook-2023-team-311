@@ -6,6 +6,8 @@ Feature: Add Grade
         And I click "New Grade"
         And I fill out the form and submit
         Then I should have added a grade
+        When I click "Sign out"
+        Then I should be logged out
     Scenario: signed in as ta and adding a grade
         Given there are grades in the gradebook
         And I sign in as ta
@@ -13,3 +15,5 @@ Feature: Add Grade
         And I click "New Grade"
         And I fill out the form and submit
         Then I should have added a grade
+        When I click "Sign out"
+        Then I should be logged out

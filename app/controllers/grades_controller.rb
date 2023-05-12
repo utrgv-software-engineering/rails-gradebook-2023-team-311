@@ -44,8 +44,12 @@ class GradesController < ApplicationController
 
   # DELETE /grades/1
   def destroy
-    @grade.destroy
-    redirect_to grades_url, notice: 'Grade was successfully destroyed.'
+    if current_user.role_id == 1
+      @grade.destroy
+      redirect_to grades_url, notice: 'Grade was successfully destroyed.'
+    else
+      redirect_to grades_url, notice: 'You do not have permission to destroy grade.'
+    end
   end
 
   private
