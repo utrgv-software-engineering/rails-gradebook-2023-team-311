@@ -5,6 +5,17 @@ class GradesController < ApplicationController
   def index
     if !user_signed_in?
       redirect_to user_session_path
+    else 
+      @grades = Grade.all
+      if params[:sort_order] == 'asc'
+        @grades = @grades.order('student_grade ASC')
+        puts "Sort order: #{params[:sort_order]}"
+        puts "Sorted grades: #{@grades.inspect}"
+      elsif params[:sort_order] == 'desc'
+        @grades = @grades.order('student_grade DESC')
+        puts "Sort order: #{params[:sort_order]}"
+        puts "Sorted grades: #{@grades.inspect}"
+      end
     end
   end
 

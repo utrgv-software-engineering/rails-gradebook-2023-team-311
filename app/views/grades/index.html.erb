@@ -1,9 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<% @grades = Grade.all %>
+<% if params[:sort_order] == 'asc' %>
+  <% @grades = Grade.order('student_grade ASC') %>
+<% elsif params[:sort_order] == 'desc' %>
+  <% @grades = Grade.order('student_grade DESC') %>
+<% else %>
+  <% @grades = Grade.all %>
+<% end %>
 
 <h1>Grades</h1>
+<h2> Sort By:</h2>
+<%= form_tag grades_path, method: :get do %>
+ <%= select_tag :sort_order, options_for_select({ 'Ascending' => 'asc', 'Descending' => 'desc' }, params[:sort_order]), include_blank: false %>
 
+  <%= submit_tag 'Sort' %>
+<% end %>
 <table>
   <thead>
     <tr>
